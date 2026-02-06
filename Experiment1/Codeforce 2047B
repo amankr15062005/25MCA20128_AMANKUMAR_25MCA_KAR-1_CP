@@ -1,0 +1,59 @@
+import java.util.*;
+ 
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        if (!sc.hasNextInt()) return;
+        int t = sc.nextInt();
+ 
+        while (t-- > 0) {
+            int n = sc.nextInt();
+            String s = sc.next();
+            
+            if (n == 1) {
+                System.out.println(s);
+                continue;
+            }
+ 
+            int[] freq = new int[26];
+            for (char c : s.toCharArray()) {
+                freq[c - 'a']++;
+            }
+ 
+            int maxFreq = -1, minFreq = 11; 
+            char maxChar = ' ', minChar = ' ';
+ 
+            for (int i = 0; i < 26; i++) {
+                if (freq[i] > 0) {
+                    if (freq[i] >= maxFreq) {
+                        maxFreq = freq[i];
+                        maxChar = (char) (i + 'a');
+                    }
+                    if (freq[i] <= minFreq) {
+                        minFreq = freq[i];
+                        minChar = (char) (i + 'a');
+                    }
+                }
+            }
+ 
+            if (minChar == maxChar) {
+                for (int i = 0; i < 26; i++) {
+                    if (freq[i] > 0 && (char)(i + 'a') != maxChar) {
+                        minChar = (char)(i + 'a');
+                        break;
+                    }
+                }
+            }
+ 
+            char[] res = s.toCharArray();
+            for (int i = 0; i < n; i++) {
+                if (res[i] == minChar) {
+                    res[i] = maxChar;
+                    break;
+                }
+            }
+            
+            System.out.println(new String(res));
+        }
+    }
+}
